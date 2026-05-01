@@ -334,3 +334,52 @@ func (hooks *hooksTimerLayer) OnSAMLLogin(c *Context, user *model.User, assertio
 	hooks.recordTime(startTime, "OnSAMLLogin", _returnsA == nil)
 	return _returnsA
 }
+
+func (hooks *hooksTimerLayer) ChannelWillBeUpdated(c *Context, newChannel, oldChannel *model.Channel) (*model.Channel, string) {
+	startTime := timePkg.Now()
+	_returnsA, _returnsB := hooks.hooksImpl.ChannelWillBeUpdated(c, newChannel, oldChannel)
+	hooks.recordTime(startTime, "ChannelWillBeUpdated", true)
+	return _returnsA, _returnsB
+}
+
+func (hooks *hooksTimerLayer) ChannelWillBeMoved(c *Context, channel *model.Channel, fromTeamID, toTeamID string) string {
+	startTime := timePkg.Now()
+	_returnsA := hooks.hooksImpl.ChannelWillBeMoved(c, channel, fromTeamID, toTeamID)
+	hooks.recordTime(startTime, "ChannelWillBeMoved", true)
+	return _returnsA
+}
+
+func (hooks *hooksTimerLayer) ChannelWillBeRestored(c *Context, channel *model.Channel) string {
+	startTime := timePkg.Now()
+	_returnsA := hooks.hooksImpl.ChannelWillBeRestored(c, channel)
+	hooks.recordTime(startTime, "ChannelWillBeRestored", true)
+	return _returnsA
+}
+
+func (hooks *hooksTimerLayer) ScheduledPostWillBeCreated(c *Context, scheduledPost *model.ScheduledPost) (*model.ScheduledPost, string) {
+	startTime := timePkg.Now()
+	_returnsA, _returnsB := hooks.hooksImpl.ScheduledPostWillBeCreated(c, scheduledPost)
+	hooks.recordTime(startTime, "ScheduledPostWillBeCreated", true)
+	return _returnsA, _returnsB
+}
+
+func (hooks *hooksTimerLayer) DraftWillBeUpserted(c *Context, draft *model.Draft) (*model.Draft, string) {
+	startTime := timePkg.Now()
+	_returnsA, _returnsB := hooks.hooksImpl.DraftWillBeUpserted(c, draft)
+	hooks.recordTime(startTime, "DraftWillBeUpserted", true)
+	return _returnsA, _returnsB
+}
+
+func (hooks *hooksTimerLayer) RecapWillBeProcessed(c *Context, channel *model.Channel) string {
+	startTime := timePkg.Now()
+	_returnsA := hooks.hooksImpl.RecapWillBeProcessed(c, channel)
+	hooks.recordTime(startTime, "RecapWillBeProcessed", true)
+	return _returnsA
+}
+
+func (hooks *hooksTimerLayer) MessageWillBeRewrittenByAI(c *Context, post *model.Post, action string) string {
+	startTime := timePkg.Now()
+	_returnsA := hooks.hooksImpl.MessageWillBeRewrittenByAI(c, post, action)
+	hooks.recordTime(startTime, "MessageWillBeRewrittenByAI", true)
+	return _returnsA
+}

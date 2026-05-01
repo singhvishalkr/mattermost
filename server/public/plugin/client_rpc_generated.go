@@ -1306,6 +1306,258 @@ func (s *hooksRPCServer) OnSAMLLogin(args *Z_OnSAMLLoginArgs, returns *Z_OnSAMLL
 	return nil
 }
 
+func init() {
+	hookNameToId["ChannelWillBeUpdated"] = ChannelWillBeUpdatedID
+}
+
+type Z_ChannelWillBeUpdatedArgs struct {
+	A *Context
+	B *model.Channel
+	C *model.Channel
+}
+
+type Z_ChannelWillBeUpdatedReturns struct {
+	A *model.Channel
+	B string
+}
+
+func (g *hooksRPCClient) ChannelWillBeUpdated(c *Context, newChannel, oldChannel *model.Channel) (*model.Channel, string) {
+	_args := &Z_ChannelWillBeUpdatedArgs{c, newChannel, oldChannel}
+	_returns := &Z_ChannelWillBeUpdatedReturns{}
+	if g.implemented[ChannelWillBeUpdatedID] {
+		if err := g.client.Call("Plugin.ChannelWillBeUpdated", _args, _returns); err != nil {
+			g.log.Error("RPC call ChannelWillBeUpdated to plugin failed.", mlog.Err(err))
+		}
+	}
+	return _returns.A, _returns.B
+}
+
+func (s *hooksRPCServer) ChannelWillBeUpdated(args *Z_ChannelWillBeUpdatedArgs, returns *Z_ChannelWillBeUpdatedReturns) error {
+	if hook, ok := s.impl.(interface {
+		ChannelWillBeUpdated(c *Context, newChannel, oldChannel *model.Channel) (*model.Channel, string)
+	}); ok {
+		returns.A, returns.B = hook.ChannelWillBeUpdated(args.A, args.B, args.C)
+	} else {
+		return encodableError(fmt.Errorf("Hook ChannelWillBeUpdated called but not implemented."))
+	}
+	return nil
+}
+
+func init() {
+	hookNameToId["ChannelWillBeMoved"] = ChannelWillBeMovedID
+}
+
+type Z_ChannelWillBeMovedArgs struct {
+	A *Context
+	B *model.Channel
+	C string
+	D string
+}
+
+type Z_ChannelWillBeMovedReturns struct {
+	A string
+}
+
+func (g *hooksRPCClient) ChannelWillBeMoved(c *Context, channel *model.Channel, fromTeamID, toTeamID string) string {
+	_args := &Z_ChannelWillBeMovedArgs{c, channel, fromTeamID, toTeamID}
+	_returns := &Z_ChannelWillBeMovedReturns{}
+	if g.implemented[ChannelWillBeMovedID] {
+		if err := g.client.Call("Plugin.ChannelWillBeMoved", _args, _returns); err != nil {
+			g.log.Error("RPC call ChannelWillBeMoved to plugin failed.", mlog.Err(err))
+		}
+	}
+	return _returns.A
+}
+
+func (s *hooksRPCServer) ChannelWillBeMoved(args *Z_ChannelWillBeMovedArgs, returns *Z_ChannelWillBeMovedReturns) error {
+	if hook, ok := s.impl.(interface {
+		ChannelWillBeMoved(c *Context, channel *model.Channel, fromTeamID, toTeamID string) string
+	}); ok {
+		returns.A = hook.ChannelWillBeMoved(args.A, args.B, args.C, args.D)
+	} else {
+		return encodableError(fmt.Errorf("Hook ChannelWillBeMoved called but not implemented."))
+	}
+	return nil
+}
+
+func init() {
+	hookNameToId["ChannelWillBeRestored"] = ChannelWillBeRestoredID
+}
+
+type Z_ChannelWillBeRestoredArgs struct {
+	A *Context
+	B *model.Channel
+}
+
+type Z_ChannelWillBeRestoredReturns struct {
+	A string
+}
+
+func (g *hooksRPCClient) ChannelWillBeRestored(c *Context, channel *model.Channel) string {
+	_args := &Z_ChannelWillBeRestoredArgs{c, channel}
+	_returns := &Z_ChannelWillBeRestoredReturns{}
+	if g.implemented[ChannelWillBeRestoredID] {
+		if err := g.client.Call("Plugin.ChannelWillBeRestored", _args, _returns); err != nil {
+			g.log.Error("RPC call ChannelWillBeRestored to plugin failed.", mlog.Err(err))
+		}
+	}
+	return _returns.A
+}
+
+func (s *hooksRPCServer) ChannelWillBeRestored(args *Z_ChannelWillBeRestoredArgs, returns *Z_ChannelWillBeRestoredReturns) error {
+	if hook, ok := s.impl.(interface {
+		ChannelWillBeRestored(c *Context, channel *model.Channel) string
+	}); ok {
+		returns.A = hook.ChannelWillBeRestored(args.A, args.B)
+	} else {
+		return encodableError(fmt.Errorf("Hook ChannelWillBeRestored called but not implemented."))
+	}
+	return nil
+}
+
+func init() {
+	hookNameToId["ScheduledPostWillBeCreated"] = ScheduledPostWillBeCreatedID
+}
+
+type Z_ScheduledPostWillBeCreatedArgs struct {
+	A *Context
+	B *model.ScheduledPost
+}
+
+type Z_ScheduledPostWillBeCreatedReturns struct {
+	A *model.ScheduledPost
+	B string
+}
+
+func (g *hooksRPCClient) ScheduledPostWillBeCreated(c *Context, scheduledPost *model.ScheduledPost) (*model.ScheduledPost, string) {
+	_args := &Z_ScheduledPostWillBeCreatedArgs{c, scheduledPost}
+	_returns := &Z_ScheduledPostWillBeCreatedReturns{}
+	if g.implemented[ScheduledPostWillBeCreatedID] {
+		if err := g.client.Call("Plugin.ScheduledPostWillBeCreated", _args, _returns); err != nil {
+			g.log.Error("RPC call ScheduledPostWillBeCreated to plugin failed.", mlog.Err(err))
+		}
+	}
+	return _returns.A, _returns.B
+}
+
+func (s *hooksRPCServer) ScheduledPostWillBeCreated(args *Z_ScheduledPostWillBeCreatedArgs, returns *Z_ScheduledPostWillBeCreatedReturns) error {
+	if hook, ok := s.impl.(interface {
+		ScheduledPostWillBeCreated(c *Context, scheduledPost *model.ScheduledPost) (*model.ScheduledPost, string)
+	}); ok {
+		returns.A, returns.B = hook.ScheduledPostWillBeCreated(args.A, args.B)
+	} else {
+		return encodableError(fmt.Errorf("Hook ScheduledPostWillBeCreated called but not implemented."))
+	}
+	return nil
+}
+
+func init() {
+	hookNameToId["DraftWillBeUpserted"] = DraftWillBeUpsertedID
+}
+
+type Z_DraftWillBeUpsertedArgs struct {
+	A *Context
+	B *model.Draft
+}
+
+type Z_DraftWillBeUpsertedReturns struct {
+	A *model.Draft
+	B string
+}
+
+func (g *hooksRPCClient) DraftWillBeUpserted(c *Context, draft *model.Draft) (*model.Draft, string) {
+	_args := &Z_DraftWillBeUpsertedArgs{c, draft}
+	_returns := &Z_DraftWillBeUpsertedReturns{}
+	if g.implemented[DraftWillBeUpsertedID] {
+		if err := g.client.Call("Plugin.DraftWillBeUpserted", _args, _returns); err != nil {
+			g.log.Error("RPC call DraftWillBeUpserted to plugin failed.", mlog.Err(err))
+		}
+	}
+	return _returns.A, _returns.B
+}
+
+func (s *hooksRPCServer) DraftWillBeUpserted(args *Z_DraftWillBeUpsertedArgs, returns *Z_DraftWillBeUpsertedReturns) error {
+	if hook, ok := s.impl.(interface {
+		DraftWillBeUpserted(c *Context, draft *model.Draft) (*model.Draft, string)
+	}); ok {
+		returns.A, returns.B = hook.DraftWillBeUpserted(args.A, args.B)
+	} else {
+		return encodableError(fmt.Errorf("Hook DraftWillBeUpserted called but not implemented."))
+	}
+	return nil
+}
+
+func init() {
+	hookNameToId["RecapWillBeProcessed"] = RecapWillBeProcessedID
+}
+
+type Z_RecapWillBeProcessedArgs struct {
+	A *Context
+	B *model.Channel
+}
+
+type Z_RecapWillBeProcessedReturns struct {
+	A string
+}
+
+func (g *hooksRPCClient) RecapWillBeProcessed(c *Context, channel *model.Channel) string {
+	_args := &Z_RecapWillBeProcessedArgs{c, channel}
+	_returns := &Z_RecapWillBeProcessedReturns{}
+	if g.implemented[RecapWillBeProcessedID] {
+		if err := g.client.Call("Plugin.RecapWillBeProcessed", _args, _returns); err != nil {
+			g.log.Error("RPC call RecapWillBeProcessed to plugin failed.", mlog.Err(err))
+		}
+	}
+	return _returns.A
+}
+
+func (s *hooksRPCServer) RecapWillBeProcessed(args *Z_RecapWillBeProcessedArgs, returns *Z_RecapWillBeProcessedReturns) error {
+	if hook, ok := s.impl.(interface {
+		RecapWillBeProcessed(c *Context, channel *model.Channel) string
+	}); ok {
+		returns.A = hook.RecapWillBeProcessed(args.A, args.B)
+	} else {
+		return encodableError(fmt.Errorf("Hook RecapWillBeProcessed called but not implemented."))
+	}
+	return nil
+}
+
+func init() {
+	hookNameToId["MessageWillBeRewrittenByAI"] = MessageWillBeRewrittenByAIID
+}
+
+type Z_MessageWillBeRewrittenByAIArgs struct {
+	A *Context
+	B *model.Post
+	C string
+}
+
+type Z_MessageWillBeRewrittenByAIReturns struct {
+	A string
+}
+
+func (g *hooksRPCClient) MessageWillBeRewrittenByAI(c *Context, post *model.Post, action string) string {
+	_args := &Z_MessageWillBeRewrittenByAIArgs{c, post, action}
+	_returns := &Z_MessageWillBeRewrittenByAIReturns{}
+	if g.implemented[MessageWillBeRewrittenByAIID] {
+		if err := g.client.Call("Plugin.MessageWillBeRewrittenByAI", _args, _returns); err != nil {
+			g.log.Error("RPC call MessageWillBeRewrittenByAI to plugin failed.", mlog.Err(err))
+		}
+	}
+	return _returns.A
+}
+
+func (s *hooksRPCServer) MessageWillBeRewrittenByAI(args *Z_MessageWillBeRewrittenByAIArgs, returns *Z_MessageWillBeRewrittenByAIReturns) error {
+	if hook, ok := s.impl.(interface {
+		MessageWillBeRewrittenByAI(c *Context, post *model.Post, action string) string
+	}); ok {
+		returns.A = hook.MessageWillBeRewrittenByAI(args.A, args.B, args.C)
+	} else {
+		return encodableError(fmt.Errorf("Hook MessageWillBeRewrittenByAI called but not implemented."))
+	}
+	return nil
+}
+
 type Z_RegisterCommandArgs struct {
 	A *model.Command
 }
